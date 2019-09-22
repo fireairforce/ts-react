@@ -1,11 +1,18 @@
-import { combineReducers, createStore } from "redux";
-import { CountReducer } from "./reducer";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import reducers from "../reducer";
 
 const rootReducer = combineReducers({
-  count: CountReducer,
+  ...reducers,
 });
 
 export default function configureStore() {
-  const store = createStore(rootReducer);
+  const store = createStore(
+    rootReducer,
+    process.env.NODE_ENV === "development"
+      ? composeWithDevTools(applyMiddleware(thunk))
+      : applyMiddleware(thunk),
+  );
   return store;
 }
