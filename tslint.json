@@ -21,7 +21,7 @@
             false
         ],
         "interface-name": [
-            true
+            false
         ],
         "object-literal-sort-keys": false,
         "no-object-literal-type-assertion": false,
