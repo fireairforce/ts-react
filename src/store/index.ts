@@ -9,12 +9,22 @@ const rootReducer = combineReducers({
   ...reducers,
 });
 
-export default function configureStore() {
-  const store = createStore(
-    rootReducer,
-    process.env.NODE_ENV === "development"
-      ? composeWithDevTools(applyMiddleware(thunk))
-      : applyMiddleware(thunk),
-  );
-  return store;
-}
+const persistConfig: PersistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["draft"],
+};
+
+const persistedReducer: typeof rootReducer = persistReducer(
+  persistConfig,
+  rootReducer,
+);
+
+const store = createStore(
+  persistedReducer,
+  process.env.NODE_ENV === "development"
+    ? composeWithDevTools(applyMiddleware(thunk))
+    : applyMiddleware(thunk),
+);
+const persistor = persistStore(store);
+export { store, persistor };
