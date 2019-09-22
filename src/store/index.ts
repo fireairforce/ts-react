@@ -1,8 +1,10 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { persistReducer, persistStore, PersistConfig } from "redux-persist";
+// tslint:disable-next-line:no-submodule-imports
+import storage from "redux-persist/es/storage";
 import thunk from "redux-thunk";
 import reducers from "../reducer";
-
 const rootReducer = combineReducers({
   ...reducers,
 });

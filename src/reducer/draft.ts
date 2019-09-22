@@ -1,18 +1,26 @@
-import { editDraftAction, EDIT_DRAFT_ACTION_TYPE } from "../action";
-import { IDraftState } from "../typings/store";
+import {
+  editDraftAction,
+  resetDraftAction,
+  EDIT_DRAFT_ACTION_TYPE,
+  RESET_DRAFT_ACTION_TYPE,
+} from "../action";
 
 const defaultState: IDraftState = {
   isChecked: false,
   content: "",
 };
 
-export default (
-  state = defaultState,
-  action: ReturnType<typeof editDraftAction>,
-) => {
+type actionType =
+  | ReturnType<typeof editDraftAction>
+  | ReturnType<typeof resetDraftAction>;
+
+export default (state = defaultState, action: actionType) => {
   switch (action.type) {
     case EDIT_DRAFT_ACTION_TYPE: {
-      return action.payload;
+      return (action as ReturnType<typeof editDraftAction>).payload;
+    }
+    case RESET_DRAFT_ACTION_TYPE: {
+      return state;
     }
     default: {
       return state;

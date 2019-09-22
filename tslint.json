@@ -1,55 +1,38 @@
 {
-    "extends": [
-        "tslint:latest",
-        "tslint-react"
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "curly": false,
+    "jsx-no-lambda": true,
+    "semicolon": [false, "always"],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-first"
+      }
     ],
-    "rules": {
-        "curly": false,
-        "jsx-no-lambda": true,
-        "semicolon": [
-            false,
-            "always"
-        ],
-        "ordered-imports": [
-            true,
-            {
-                "import-sources-order": "lowercase-last",
-                "named-imports-order": "lowercase-first"
-            }
-        ],
-       "no-console": [
-            false
-        ],
-        "interface-name": [
-            false
-        ],
-        "object-literal-sort-keys": false,
-        "no-object-literal-type-assertion": false,
-        "no-empty-interface": false,
-        "member-access": false,
-        "jsx-boolean-value": false,
-        "jsx-no-multiline-js": false,
-        "quotemark": [
-            true,
-            "double",
-            "jsx-double",
-            "avoid-escape"
-        ],
-        "object-literal-key-quotes": [
-            true,
-            "as-needed"
-        ],
-        "no-any": true,
-        "whitespace": [
-            true,
-            "check-module",
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type",
-            "check-typecast"
-        ],
-        "ban-comma-operator": true
-    }
+    "no-submodule-imports": false,
+    "no-console": [false],
+    "interface-name": [false],
+    "object-literal-sort-keys": false,
+    "no-object-literal-type-assertion": false,
+    "no-empty-interface": false,
+    "member-access": false,
+    "jsx-boolean-value": false,
+    "jsx-no-multiline-js": false,
+    "quotemark": [true, "double", "jsx-double", "avoid-escape"],
+    "object-literal-key-quotes": [true, "as-needed"],
+    "no-any": true,
+    "whitespace": [
+      true,
+      "check-module",
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type",
+      "check-typecast"
+    ],
+    "ban-comma-operator": true
+  }
 }

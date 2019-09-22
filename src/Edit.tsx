@@ -1,45 +1,54 @@
 import React, { ChangeEventHandler, Component } from "react";
+import { connect } from "react-redux";
+import { editDraftAction, saveDraftAction } from "./action/index";
 
-interface IState {
-  isChecked: boolean;
-  content: string;
-}
+const mapStateToProps = (storeState: IStoreState) => ({
+  draft: storeState.draft,
+});
 
-class Edit extends Component {
-  state: IState = {
-    isChecked: false,
-    content: "",
-  };
+// 这个地方其实就是个泛型
+type IStateProps = ReturnType<typeof mapStateToProps>;
 
+const mapDispatchToProps = {
+  editDraftAction,
+  saveDraftAction,
+};
+
+type IDispatchProps = typeof mapDispatchToProps;
+
+type IProps = IStateProps & IDispatchProps;
+
+class Edit extends Component<IProps> {
   onCheckboxValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    this.setState({
+    this.props.editDraftAction({
+      ...this.props.draft,
       isChecked: e.target.checked,
     });
   };
 
   onContentValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    this.setState({
+    this.props.editDraftAction({
+      ...this.props.draft,
       content: e.target.value,
     });
   };
 
   onSave = () => {
-    console.log(this.state);
+    this.props.saveDraftAction();
   };
 
   render() {
-    const { isChecked, content } = this.state;
     return (
       <div>
         <div>
           <input
             type="checkbox"
-            checked={isChecked}
+            checked={this.props.draft.isChecked}
             onChange={this.onCheckboxValueChange}
           />
           <input
             type="text"
-            value={content}
+            value={this.props.draft.content}
             onChange={this.onContentValueChange}
           />
         </div>
@@ -52,4 +61,7 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Edit);

@@ -1,11 +1,8 @@
-export declare interface IDraftState {
+declare interface IDraftState {
   isChecked: boolean;
   content: string;
 }
 
-export declare interface IStoreState {
-  route: {
-    location: Location;
-  };
+declare interface IStoreState {
   draft: IDraftState;
 }
