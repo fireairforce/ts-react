@@ -6,6 +6,7 @@ import {
   fetchItemById,
 } from "./action/index";
 import { RouteComponentProps } from "react-router-dom";
+import { NEW_DRAFT_SYMBOL } from "./reducer/draft";
 
 const mapStateToProps = (storeState: IStoreState) => ({
   draft: storeState.draft,
@@ -31,7 +32,10 @@ const Edit: React.FC = (props) => {
       (props as IProps).fetchItemById(id);
     }
   });
-  const Draft = (props as IProps).draft[(props as IProps).match.params.id];
+  const Draft = (props as IProps).draft[
+    (props as IProps).match.params.id || NEW_DRAFT_SYMBOL
+  ];
+
   const onCheckboxValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     (props as IProps).editDraftAction({
       ...Draft,
@@ -49,7 +53,7 @@ const Edit: React.FC = (props) => {
   const onSave = () => {
     (props as IProps).saveDraftAction(Draft.id);
   };
-  return Draft ? null : (
+  return Draft ? (
     <div>
       <div>
         <input
@@ -68,7 +72,7 @@ const Edit: React.FC = (props) => {
         <button onClick={onSave}>确定</button>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default connect<IStateProps, IDispatchProps>(

@@ -5,7 +5,7 @@ import {
   RESET_DRAFT_ACTION_TYPE,
 } from "../action";
 
-export const NEW_DRAFT_SYMBOL = 1;
+export const NEW_DRAFT_SYMBOL = -1;
 
 const defaultState: IDraftState = {
   id: NEW_DRAFT_SYMBOL,
