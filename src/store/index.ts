@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { persistReducer, persistStore, PersistConfig } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 // tslint:disable-next-line:no-submodule-imports
 import storage from "redux-persist/es/storage";
 import thunk from "redux-thunk";
@@ -9,16 +9,13 @@ const rootReducer = combineReducers({
   ...reducers,
 });
 
-const persistConfig: PersistConfig = {
+const persistConfig = {
   key: "root",
   storage,
   whitelist: ["draft"],
 };
 
-const persistedReducer: typeof rootReducer = persistReducer(
-  persistConfig,
-  rootReducer,
-);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(
   persistedReducer,
