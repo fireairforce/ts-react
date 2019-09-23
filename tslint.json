@@ -2,7 +2,7 @@
   "extends": ["tslint:latest", "tslint-react"],
   "rules": {
     "curly": false,
-    "jsx-no-lambda": true,
+    "jsx-no-lambda": false,
     "semicolon": [false, "always"],
     "ordered-imports": [
       false,
@@ -22,7 +22,7 @@
     "jsx-no-multiline-js": false,
     "quotemark": [true, "double", "jsx-double", "avoid-escape"],
     "object-literal-key-quotes": [true, "as-needed"],
-    "no-any": true,
+    "no-any": false,
     "whitespace": [
       true,
       "check-module",

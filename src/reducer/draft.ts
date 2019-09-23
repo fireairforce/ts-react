@@ -5,7 +5,10 @@ import {
   RESET_DRAFT_ACTION_TYPE,
 } from "../action";
 
+export const NEW_DRAFT_SYMBOL = 1;
+
 const defaultState: IDraftState = {
+  id: NEW_DRAFT_SYMBOL,
   isChecked: false,
   content: "",
 };
@@ -17,10 +20,16 @@ type actionType =
 export default (state = defaultState, action: actionType) => {
   switch (action.type) {
     case EDIT_DRAFT_ACTION_TYPE: {
-      return (action as ReturnType<typeof editDraftAction>).payload;
+      return {
+        ...state,
+        [action.payload.id]: action.payload,
+      };
     }
     case RESET_DRAFT_ACTION_TYPE: {
-      return defaultState;
+      return {
+        ...state,
+        [action.payload.id]: defaultState,
+      };
     }
     default: {
       return state;

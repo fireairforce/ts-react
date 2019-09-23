@@ -1,6 +1,11 @@
-import React, { ChangeEventHandler, Component } from "react";
+import React, { ChangeEventHandler, useEffect } from "react";
 import { connect } from "react-redux";
-import { editDraftAction, saveDraftAction } from "./action/index";
+import {
+  editDraftAction,
+  saveDraftAction,
+  fetchItemById,
+} from "./action/index";
+import { RouteComponentProps } from "react-router-dom";
 
 const mapStateToProps = (storeState: IStoreState) => ({
   draft: storeState.draft,
@@ -12,56 +17,61 @@ type IStateProps = ReturnType<typeof mapStateToProps>;
 const mapDispatchToProps = {
   editDraftAction,
   saveDraftAction,
+  fetchItemById,
 };
 
 type IDispatchProps = typeof mapDispatchToProps;
 
-type IProps = IStateProps & IDispatchProps;
+type IProps = IStateProps & IDispatchProps & RouteComponentProps<any>;
 
-class Edit extends Component<IProps> {
-  onCheckboxValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    this.props.editDraftAction({
-      ...this.props.draft,
+const Edit: React.FC = (props) => {
+  useEffect(() => {
+    const id = (props as IProps).match.params.id;
+    if (id) {
+      (props as IProps).fetchItemById(id);
+    }
+  });
+  const Draft = (props as IProps).draft[(props as IProps).match.params.id];
+  const onCheckboxValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    (props as IProps).editDraftAction({
+      ...Draft,
       isChecked: e.target.checked,
     });
   };
 
-  onContentValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    this.props.editDraftAction({
-      ...this.props.draft,
+  const onContentValueChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    (props as IProps).editDraftAction({
+      ...Draft,
       content: e.target.value,
     });
   };
 
-  onSave = () => {
-    this.props.saveDraftAction();
+  const onSave = () => {
+    (props as IProps).saveDraftAction(Draft.id);
   };
-
-  render() {
-    return (
+  return Draft ? null : (
+    <div>
       <div>
-        <div>
-          <input
-            type="checkbox"
-            checked={this.props.draft.isChecked}
-            onChange={this.onCheckboxValueChange}
-          />
-          <input
-            type="text"
-            value={this.props.draft.content}
-            onChange={this.onContentValueChange}
-          />
-        </div>
-        <div>
-          <button>取消</button>
-          <button onClick={this.onSave}>确认</button>
-        </div>
+        <input
+          type="checkbox"
+          checked={Draft.isChecked}
+          onChange={onCheckboxValueChange}
+        />
+        <input
+          type="text"
+          value={Draft.content}
+          onChange={onContentValueChange}
+        />
       </div>
-    );
-  }
-}
+      <div>
+        <button>取消</button>
+        <button onClick={onSave}>确定</button>
+      </div>
+    </div>
+  );
+};
 
-export default connect(
+export default connect<IStateProps, IDispatchProps>(
   mapStateToProps,
   mapDispatchToProps,
 )(Edit);
