@@ -20,7 +20,7 @@ export default (state = defaultState, action: actionType) => {
       return (action as ReturnType<typeof editDraftAction>).payload;
     }
     case RESET_DRAFT_ACTION_TYPE: {
-      return state;
+      return defaultState;
     }
     default: {
       return state;
